@@ -1,0 +1,64 @@
+/*SIDRATH AHMED, 10/06/2023, IT-202-003, UNIT 3 Assignment, sa375@njit.edu*/
+
+
+/* The following is the CSS for Home Page */
+h1 {
+    font-family: "Courier New", Courier, monospace;
+    background-color: #F9E79F; 
+    color: #333; 
+    text-align: center;
+    padding: 10px;
+    font-weight: bold; 
+}
+
+h3 {
+    font-family: "Courier New", Courier, monospace;
+    background-color: #F9E79F; 
+    color: #333; 
+    text-align: center;
+    border: 1px solid #333; 
+    padding: 10px;
+    font-weight: bold; 
+}
+
+header h3 {
+    border: none; 
+}
+
+body {
+    font-family: "Courier New", Courier, monospace;
+    background-color: #F9E79F; 
+    color: #333; 
+    margin: 30px; 
+}
+
+h5 {
+    float: right;
+    color: #333; 
+}
+
+nav {
+    text-align: center;
+}
+
+p {
+    color: #333;
+    border: 1px solid black; 
+    padding: 10px; 
+}
+
+ul {
+    color: #333;
+    border: 1px solid black; 
+    padding: 20px; 
+}
+
+/*The following is the CSS for the background of the shipping label*/
+shipping-label {
+    background-color: #F9E79F;}
+
+
+
+  
+
+
