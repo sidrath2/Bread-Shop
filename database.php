@@ -9,7 +9,6 @@ $password = $njit_password;
 
 try {
     $db = new PDO ($dsn, $username, $password);
-    echo '<p>You are connected to the database!</p>';
 } catch (PDOException $exception){
     $error_message = $exception -> getMessage();
     include('database_error.php');

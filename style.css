@@ -57,6 +57,21 @@ ul {
 shipping-label {
     background-color: #F9E79F;}
 
+/*Css for Dataset*/
+.box {
+    border: 1px solid #000; /* Border style and color */
+    padding: 10px; /* Padding inside the box */
+    margin: 10px 0; /* Margin around the box to create some space */
+}
+
+/* Style for the table headers */
+table th {
+    background-color: #F9E79F; /* Background color for table headers */
+}
+
+.no-bullets {
+    list-style-type: none;
+}
 
 
   
