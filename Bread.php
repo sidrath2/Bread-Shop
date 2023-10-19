@@ -1,4 +1,19 @@
 <?php
+
+require_once ('database.php');
+
+
+foreach ($breadproduct as $breadproduct){
+    <tr>
+
+    </tr>
+}
+
+?>
+
+
+
+<?php
 require_once('database.php');
 
 $category_id = filter_input (INPUT_GET, 'category_id', FILTER_VALIDATE_INT);
@@ -9,41 +24,31 @@ if ($category_id == NULL || $category_id == FALSE){
 
 
 //get name for selected category
-$queryCategory = 'SELECT * FROM categories WHERE categoryID = :category_id';
-$statement1 = $db->prepare ($queryCategory);
+
+$query = 'SELECT breadCategoryName, breadCode, breadName, description, price 
+FROM bread, breadCategories 
+WHERE breadID = :category_id';
+$statement1 = $db->prepare ($query);
 $statement1->bindValue (':category_id', $category_id);
 $statement1->execute();
 $category = $statement1->fetch();
-$category_name = $category['categoryName'];
-$statement1->closeCursor ();
+$category_name = $category['breadCategoryName'];
+$statement1->closeCursor();
 
 
 
-//get all categories
-$queryAllCategories = 'SELECT * FROM categories ORDER BY categoryID';
-$statement2 = $db->prepare ($queryAllCategories);
+
+$queryAllCategories = 'SELECT * FROM breadCategoryName ORDER BY breadID';
+$statement2 = $db->prepare($queryAllCategories);
 $statement2->execute();
 $categories = $statement2->fetchAll();
 $statement2->closeCursor();
 
 
 
-//get products for selected category
-$queryProducts = 'SELECT*FROM products 
-    WHERE categoryID = :category_id ORDER BY productID';
-$statement3 = $db->prepare($queryProducts);
-$statement3->bindValue(':category_id', $category_id);
-$statement3->execute();
-$products = $statement3->fetchALL();
-$statement3->closeCursor();
-?>
-
-
-<!--Slide 28-->
-
 <html>
 <head>
-    <title>My Guitar Schop</title>
+    <title>Bread Shop</title>
     <link rel = "stylesheet" href = "style.css">
 </head>
 <body>
@@ -64,7 +69,7 @@ $statement3->closeCursor();
 
     </aside>
 
-<!--Slide 29 -->
+
 <section>
     <h2><?php echo $category_name; ?></h2>
     <table>
@@ -78,7 +83,17 @@ $statement3->closeCursor();
                 <td><?php echo $product['productCode']; ?> </td>
                 <td><?php echo $product['productName']; ?> </td>
                 <td><?php echo $product['listPrice']; ?> </td>
-                
+                <!--Slide 36 (delete modification)-->
+                <td>
+                    <form action = "delete_product.php" method = "post">
+                    <input type = "hidden" name ="product_id" 
+                        value = "<?php echo $product['productID'];?>"/>
+                        <input type = "hidden" name = "category_id"
+                            value = "<?php echo $product['categoryID'];?>"/>
+                            <input type ="submit" value = "Delete"/>
+                            
+                    </form>
+                </td>
             </tr>
         <?php endforeach; ?>
     </table>
@@ -87,3 +102,5 @@ $statement3->closeCursor();
 </body>
 
 </html>
+
+
