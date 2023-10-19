@@ -8,8 +8,6 @@ if ($category_id == NULL || $category_id == FALSE){
 }
 
 
-//get name for selected category
-
 $query = 'SELECT breadCategoryName, breadCode, breadName, description, price 
 FROM bread, breadCategories 
 WHERE breadID = :category_id';
