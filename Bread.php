@@ -17,7 +17,7 @@ $statement1->execute();
 $products = $statement1->fetchAll();
 $statement1->closeCursor();
 
-$queryAllCategories = 'SELECT * FROM breadCategories ORDER BY categoryID';
+$queryAllCategories = 'SELECT * FROM breadCategories ORDER BY breadCategoryID';
 $statement2 = $db->prepare($queryAllCategories);
 $statement2->execute();
 $breadCategories = $statement2->fetchAll();
