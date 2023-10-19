@@ -1,19 +1,4 @@
 <?php
-
-require_once ('database.php');
-
-
-foreach ($breadproduct as $breadproduct){
-    <tr>
-
-    </tr>
-}
-
-?>
-
-
-
-<?php
 require_once('database.php');
 
 $category_id = filter_input (INPUT_GET, 'category_id', FILTER_VALIDATE_INT);
@@ -44,21 +29,20 @@ $statement2->execute();
 $categories = $statement2->fetchAll();
 $statement2->closeCursor();
 
-
+?>
 
 <html>
 <head>
     <title>Bread Shop</title>
-    <link rel = "stylesheet" href = "style.css">
 </head>
 <body>
 <main>
-    <h1>Product List</h1>
+    <h1>Breads</h1>
     <aside>
         <h2>Categories</h2>
         <nav>
             <ul>
-                <?php foreach($categories as  $category): ?>
+                <?php foreach($breadCategories as  $breadCategory): ?>
                     <li>
                         <a href="?category_id=<?php echo $category['categoryID']; ?>">
                         <?php echo $category['categoryName']; ?></a>
@@ -74,26 +58,16 @@ $statement2->closeCursor();
     <h2><?php echo $category_name; ?></h2>
     <table>
         <tr>
-            <th>Code </th>
-            <th>Name</th>
-            <th>Price</th>
+            <th>Bread Code </th>
+            <th>Bread Name</th>
+            <th>Bread Price</th>
         </tr>
         <?php foreach ($products as $product) : ?>
             <tr>
                 <td><?php echo $product['productCode']; ?> </td>
                 <td><?php echo $product['productName']; ?> </td>
                 <td><?php echo $product['listPrice']; ?> </td>
-                <!--Slide 36 (delete modification)-->
-                <td>
-                    <form action = "delete_product.php" method = "post">
-                    <input type = "hidden" name ="product_id" 
-                        value = "<?php echo $product['productID'];?>"/>
-                        <input type = "hidden" name = "category_id"
-                            value = "<?php echo $product['categoryID'];?>"/>
-                            <input type ="submit" value = "Delete"/>
-                            
-                    </form>
-                </td>
+                
             </tr>
         <?php endforeach; ?>
     </table>
