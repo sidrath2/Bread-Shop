@@ -1,5 +1,5 @@
 <?php
-require_once('database.php');
+require_once('database.php'); //Calling on to the database
 
 $breadCategoryID = filter_input(INPUT_GET, 'breadCategoryID', FILTER_VALIDATE_INT);
 
@@ -36,6 +36,7 @@ foreach ($breadCategories as $breadCategory) {
 <html>
 <head>
     <title>Taskin Menu</title>
+    <meta name="description" content="Explore the delicious bread menu at Taskin Bakery.">
     <link rel = "stylesheet" href = "style.css">
 </head>
 <body>
@@ -53,7 +54,7 @@ foreach ($breadCategories as $breadCategory) {
     <aside>
         <h2>Categories</h2>
         <nav>
-            <ul class="no-bullets">
+            <ul class = "format">
                 <?php foreach($breadCategories as $breadCategory): ?>
                     <li>
                         <a href="?breadCategoryID=<?php echo $breadCategory['breadCategoryID']; ?>">
