@@ -1,5 +1,5 @@
 <!--SIDRATH AHMED, 10/06/2023, IT-202-003, UNIT 3 Assignment, sa375@njit.edu-->
-
+<!-- Hello -->
 
 <!--The following is the code for the Home page-->
 <html>
@@ -13,7 +13,9 @@
         <!--Navigating from one page to the other-->
         <a href="./index.php">Home</a>
         <a href="./shipping.html">Shipping Form</a>
+        <a href="./bread.php">Menu</a>
         <a href="./map.html">Map</a>
+
       </nav>
     <main>
         <h3>About us</h3>
