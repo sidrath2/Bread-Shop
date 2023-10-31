@@ -1,89 +1,91 @@
 <?php
-require_once('database.php');
+require_once('database.php'); //Calling on to the database
 
-$category_id = filter_input (INPUT_GET, 'category_id', FILTER_VALIDATE_INT);
+$breadCategoryID = filter_input(INPUT_GET, 'breadCategoryID', FILTER_VALIDATE_INT);
 
-if ($category_id == NULL || $category_id == FALSE){
-    $category_id = 1;
+if ($breadCategoryID == NULL || $breadCategoryID == FALSE){
+    $breadCategoryID = 1; 
 }
 
+$query = 'SELECT breadCode, breadName, description, price 
+FROM bread 
+WHERE breadCategoryID = :breadCategoryID';
 
-//get name for selected category
-$queryCategory = 'SELECT * FROM categories WHERE categoryID = :category_id';
-$statement1 = $db->prepare ($queryCategory);
-$statement1->bindValue (':category_id', $category_id);
+$statement1 = $db->prepare($query);
+$statement1->bindValue(':breadCategoryID', $breadCategoryID);
 $statement1->execute();
-$category = $statement1->fetch();
-$category_name = $category['categoryName'];
-$statement1->closeCursor ();
+$products = $statement1->fetchAll();
+$statement1->closeCursor();
 
-
-
-//get all categories
-$queryAllCategories = 'SELECT * FROM categories ORDER BY categoryID';
-$statement2 = $db->prepare ($queryAllCategories);
+$queryAllCategories = 'SELECT * FROM breadCategories ORDER BY breadCategoryID';
+$statement2 = $db->prepare($queryAllCategories);
 $statement2->execute();
-$categories = $statement2->fetchAll();
+$breadCategories = $statement2->fetchAll();
 $statement2->closeCursor();
 
 
-
-//get products for selected category
-$queryProducts = 'SELECT*FROM products 
-    WHERE categoryID = :category_id ORDER BY productID';
-$statement3 = $db->prepare($queryProducts);
-$statement3->bindValue(':category_id', $category_id);
-$statement3->execute();
-$products = $statement3->fetchALL();
-$statement3->closeCursor();
+$selectedCategoryName = "";
+foreach ($breadCategories as $breadCategory) {
+    if ($breadCategory['breadCategoryID'] == $breadCategoryID) {
+        $selectedCategoryName = $breadCategory['breadCategoryName'];
+        break;
+    }
+}
 ?>
-
-
-<!--Slide 28-->
 
 <html>
 <head>
-    <title>My Guitar Schop</title>
+    <title>Taskin Menu</title>
+    <meta name="description" content="Explore the delicious bread menu at Taskin Bakery.">
     <link rel = "stylesheet" href = "style.css">
 </head>
 <body>
+<?php include ('header.php'); ?>
+<nav>
+        <!--Navigating from one page to the other-->
+        <a href="./index.php">Home</a>
+        <a href="./shipping.html">Shipping Form</a>
+        <a href="./bread.php">Menu</a>
+        <a href="./map.html">Map</a>
+
+      </nav>
 <main>
-    <h1>Product List</h1>
+    <h1>Taskin Menu</h1>
     <aside>
         <h2>Categories</h2>
         <nav>
-            <ul>
-                <?php foreach($categories as  $category): ?>
+            <ul class = "format">
+                <?php foreach($breadCategories as $breadCategory): ?>
                     <li>
-                        <a href="?category_id=<?php echo $category['categoryID']; ?>">
-                        <?php echo $category['categoryName']; ?></a>
+                        <a href="?breadCategoryID=<?php echo $breadCategory['breadCategoryID']; ?>">
+                            <?php echo $breadCategory['breadCategoryName']; ?>
+                        </a>
                     </li>
-                    <?php endforeach; ?>
+                <?php endforeach; ?>
             </ul>
         </nav>
-
     </aside>
 
-<!--Slide 29 -->
-<section>
-    <h2><?php echo $category_name; ?></h2>
-    <table>
-        <tr>
-            <th>Code </th>
-            <th>Name</th>
-            <th>Price</th>
-        </tr>
-        <?php foreach ($products as $product) : ?>
+    <section class = "box">
+        <h2><?php echo $selectedCategoryName; ?></h2>
+        <table>
             <tr>
-                <td><?php echo $product['productCode']; ?> </td>
-                <td><?php echo $product['productName']; ?> </td>
-                <td><?php echo $product['listPrice']; ?> </td>
-                
+                <th>Bread Code</th>
+                <th>Bread Name</th>
+                <th>Bread Description</th>
+                <th>Bread Price</th>
             </tr>
-        <?php endforeach; ?>
-    </table>
-</section>
+            <?php foreach ($products as $product) : ?>
+                <tr>
+                    <td><?php echo $product['breadCode']; ?></td>
+                    <td><?php echo $product['breadName']; ?></td>
+                    <td><?php echo $product['description']; ?></td>
+                    <td><?php echo $product['price']; ?></td>
+                </tr>
+            <?php endforeach; ?>
+        </table>
+    </section>
 </main>
+<?php include ('footer.php'); ?>
 </body>
-
 </html>
