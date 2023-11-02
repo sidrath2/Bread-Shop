@@ -9,6 +9,10 @@ $breadCategories = $statement->fetchAll();
 $statement->closeCursor();
 ?>
 
+
+
+
+
 <html>
 <head>
     <title>Taskin Bakery & Cafe Since 1997</title>

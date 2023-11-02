@@ -1,17 +1,14 @@
 <?php
-//function duplicate($code) {
-  //  global $db; // Use the global database connection
 
-    //$query = "SELECT COUNT(*) FROM bread WHERE breadCode = :code";
-    //$statement = $db->prepare($query);
-    //$statement->bindValue(':code', $code);
-    //$statement->execute();
-    //$count = $statement->fetchColumn();
-    //$statement->closeCursor();
-
-    //return $count > 0;
-//}
-
+function double($db, $breadCode) {
+    $query = 'SELECT COUNT(*) FROM bread WHERE breadCode = :breadCode';
+    $statement = $db->prepare($query);
+    $statement->bindValue(':breadCode', $breadCode);
+    $statement->execute();
+    $check = $statement->fetchColumn();
+    $statement->closeCursor();
+    return $check > 0;
+}
 
 $breadCategoryID = filter_input(INPUT_POST, 'breadCategoryID', FILTER_VALIDATE_INT);
 $breadCode = filter_input(INPUT_POST, 'code');
@@ -20,21 +17,26 @@ $breadName = filter_input(INPUT_POST, 'name');
 $breadPrice = filter_input(INPUT_POST, 'price', FILTER_VALIDATE_FLOAT);
 
 if ($breadCategoryID === null || $breadCategoryID === false || $breadCode === null || $breadCode === false || $breadName === null || $breadPrice === null || $breadPrice === false) {
-    $error = "Invalid product data. Check all fields and try again.";
+    $error = "Invalid bread data";
     echo "$error<br>";
 } else {
     require_once('database.php');
-    $query = "INSERT INTO bread (breadCategoryID, breadCode, breadName, description, price, dateAdded) VALUES (:breadCategoryID, :breadCode, :breadName, :breadDescription, :breadPrice, NOW())"; // Corrected SQL query
-    $statement = $db->prepare($query);
-    $statement->bindValue(':breadCategoryID', $breadCategoryID);
-    $statement->bindValue(':breadCode', $breadCode);
-    $statement->bindValue(':breadName', $breadName);
-    $statement->bindValue(':breadDescription', $breadDescription);
-    $statement->bindValue(':breadPrice', $breadPrice);
-    $statement->execute(); 
-    $statement->closeCursor();
+    
+    if (double($db, $breadCode)) {
+        $error = "Bread code '$breadCode' already exists.";
+        echo "$error<br>";
+    } else {
+        $query = "INSERT INTO bread (breadCategoryID, breadCode, breadName, description, price, dateAdded) VALUES (:breadCategoryID, :breadCode, :breadName, :breadDescription, :breadPrice, NOW())";
+        $statement = $db->prepare($query);
+        $statement->bindValue(':breadCategoryID', $breadCategoryID);
+        $statement->bindValue(':breadCode', $breadCode);
+        $statement->bindValue(':breadName', $breadName);
+        $statement->bindValue(':breadDescription', $breadDescription);
+        $statement->bindValue(':breadPrice', $breadPrice);
+        $statement->execute();
+        $statement->closeCursor();
+    }
 }
-
 ?>
 
 <html>
