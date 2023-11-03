@@ -47,7 +47,7 @@ foreach ($breadCategories as $breadCategory) {
         <a href="./shipping.html">Shipping Form</a>
         <a href="./bread.php">Menu</a>
         <a href="./map.html">Map</a>
-
+        <a href="./create.php">Bread Manager</a>
       </nav>
 <main>
     <h1>Taskin Menu</h1>
