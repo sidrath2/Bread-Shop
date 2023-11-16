@@ -7,10 +7,10 @@ if ($breadCategoryID == NULL || $breadCategoryID == FALSE){
     $breadCategoryID = 1; 
 }
 
-$query = 'SELECT breadCode, breadName, description, price 
+$query = 'SELECT breadID, breadCode, breadName, description, price 
 FROM bread 
 WHERE breadCategoryID = :breadCategoryID';
-
+$db = getDB(); 
 $statement1 = $db->prepare($query);
 $statement1->bindValue(':breadCategoryID', $breadCategoryID);
 $statement1->execute();
@@ -40,14 +40,32 @@ foreach ($breadCategories as $breadCategory) {
     <link rel = "stylesheet" href = "style.css">
 </head>
 <body>
+<div id="login-logout">
+            <?php
+            session_start();
+            if (isset($_SESSION['is_valid_admin']) && $_SESSION['is_valid_admin']) {
+                $firstName = $_SESSION['firstName'];
+                $lastName = $_SESSION['lastName'];
+                $emailAddress = $_SESSION['emailAddress'];
+                echo "Welcome, $firstName $lastName ($emailAddress)!  | <a href='logout.php'>Logout</a>";
+            } else {
+                echo "<a href='login.php'>Login</a>";
+            }
+            ?>
+        </div>
 <?php include ('header.php'); ?>
 <nav>
         <!--Navigating from one page to the other-->
         <a href="./index.php">Home</a>
-        <a href="./shipping.html">Shipping Form</a>
         <a href="./bread.php">Menu</a>
         <a href="./map.html">Map</a>
-        <a href="./create.php">Bread Manager</a>
+        <?php
+            if (isset($_SESSION['is_valid_admin']) && $_SESSION['is_valid_admin']) {
+                echo '<a href="./shipping.php">Shipping Form</a>';
+                echo ' ';
+                echo '<a href="./create.php">Bread Manager</a>';
+            }
+            ?>
       </nav>
 <main>
     <h1>Taskin Menu</h1>
@@ -81,6 +99,14 @@ foreach ($breadCategories as $breadCategory) {
                     <td><?php echo $product['breadName']; ?></td>
                     <td><?php echo $product['description']; ?></td>
                     <td><?php echo $product['price']; ?></td>
+                    <?php if (isset($_SESSION['is_valid_admin']) && $_SESSION['is_valid_admin']) { ?>
+                    <td>
+                        <form action="delete_bread.php" method="post">
+                        <input type="hidden" name="breadID" value="<?php echo $product['breadID']; ?>">
+                        <input type="submit" value="Delete">
+                        </form>
+                    </td>
+                    <?php } ?>
                 </tr>
             <?php endforeach; ?>
         </table>
@@ -89,3 +115,8 @@ foreach ($breadCategories as $breadCategory) {
 <?php include ('footer.php'); ?>
 </body>
 </html>
+
+
+
+
+

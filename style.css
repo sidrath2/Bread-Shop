@@ -64,6 +64,12 @@ shipping-label {
     text-align: left;
 }
 
-  
+/*Not working*/
+#login-logout {
+    text-align: right;
+    width: 100%; 
+    padding: 10px; 
+}
+
 
 
