@@ -71,5 +71,6 @@ $statement->closeCursor();
         <input type="submit" value="Add Bread">
     </form>
 </main>
+<?php include ('footer.php'); ?> <!--Calling the Footer section-->
 </body>
 </html>
