@@ -27,7 +27,7 @@
             <a href="./map.html">Map</a>
             <?php
                 if (isset($_SESSION['is_valid_admin']) && $_SESSION['is_valid_admin']) {
-                    echo '<a href="./shipping.html">Shipping Form</a>';
+                    echo '<a href="./shipping.php">Shipping Form</a>';
                     echo ' ';
                     echo '<a href="./create.php">Bread Manager</a>';
                 }
