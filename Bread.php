@@ -94,23 +94,35 @@ foreach ($breadCategories as $breadCategory) {
                 <th>Bread Price</th>
             </tr>
             <?php foreach ($products as $product) : ?>
+                <nav>
                 <tr>
-                    <td><?php echo $product['breadCode']; ?></td>
+                <td>
+                    <a href="./details.php?bread_id=<?php echo $product['breadID']; ?>">
+                    <?php echo $product['breadCode']; ?>
+                    </a>
+                </td>
+
                     <td><?php echo $product['breadName']; ?></td>
                     <td><?php echo $product['description']; ?></td>
                     <td><?php echo $product['price']; ?></td>
                     <?php if (isset($_SESSION['is_valid_admin']) && $_SESSION['is_valid_admin']) { ?>
                     <td>
-                        <form action="delete_bread.php" method="post">
+                        <form action="delete_bread.php" method="post" onsubmit="return DELETE()">
                         <input type="hidden" name="breadID" value="<?php echo $product['breadID']; ?>">
                         <input type="submit" value="Delete">
                         </form>
                     </td>
                     <?php } ?>
                 </tr>
+                    </nav>
             <?php endforeach; ?>
         </table>
     </section>
+    <script>
+    function DELETE() {
+        return confirm("Are you sure you want to delete this item?");
+    }
+</script>
 </main>
 <?php include ('footer.php'); ?>
 </body>

@@ -46,7 +46,7 @@ $statement->closeCursor();
       </nav>
 <h1>Bread Manager</h1>
 <main>
-    <form action="add_bread.php" method="post">
+    <form id="BreadManager" action="add_bread.php" method="post">
         <label>Bread Category:</label>
         <select name="breadCategoryID">
             <?php foreach ($breadCategories as $breadCategory): ?>
@@ -68,9 +68,16 @@ $statement->closeCursor();
         <label>Bread Price:</label> 
         <input type="text" name="price">
         <br>
+        <input type="button" value="Reset" onclick="reset()">
         <input type="submit" value="Add Bread">
     </form>
 </main>
+<script>
+    function reset() {
+        document('#BreadManager').reset();
+    }
+</script>
+
 <?php include ('footer.php'); ?> <!--Calling the Footer section-->
 </body>
 </html>
