@@ -19,13 +19,15 @@ $breadDescription = filter_input(INPUT_POST, 'description');
 $breadName = filter_input(INPUT_POST, 'name');
 $breadPrice = filter_input(INPUT_POST, 'price', FILTER_VALIDATE_FLOAT);
 
-if ($breadCategoryID === null || $breadCategoryID === false || $breadCode === null || $breadCode === false || $breadName === null || $breadPrice === null || $breadPrice === false) {
+if ($breadCategoryID === null || $breadCategoryID === false || $breadCode === null || $breadCode === false || $breadDescription === null || $breadDescription === false || $breadName === null || $breadName === false || $breadPrice === null || $breadPrice === false) {
     $error = "Invalid bread data";
     echo "$error<br>";
 } else {
     if (double($db, $breadCode)) {
         $error = "Bread code '$breadCode' already exists.";
         echo "$error<br>";
+        header('Location: create.php');
+            exit();
     } else {
         $query = "INSERT INTO bread (breadCategoryID, breadCode, breadName, description, price, dateAdded) VALUES (:breadCategoryID, :breadCode, :breadName, :breadDescription, :breadPrice, NOW())";
         $statement = $db->prepare($query);

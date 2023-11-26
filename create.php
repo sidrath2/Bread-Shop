@@ -1,5 +1,15 @@
 <?php
 
+function double($db, $breadCode) {
+    $query = 'SELECT COUNT(*) FROM bread WHERE breadCode = :breadCode';
+    $statement = $db->prepare($query);
+    $statement->bindValue(':breadCode', $breadCode);
+    $statement->execute();
+    $check = $statement->fetchColumn();
+    $statement->closeCursor();
+    return $check > 0;
+}
+
 require_once('database.php');
 
 $query = 'SELECT * FROM breadCategories ORDER BY breadCategoryID';
@@ -46,7 +56,7 @@ $statement->closeCursor();
       </nav>
 <h1>Bread Manager</h1>
 <main>
-    <form id="BreadManager" action="add_bread.php" method="post">
+    <form id="BreadManager" action="add_bread.php" method="post" onsubmit="return validate()">
         <label>Bread Category:</label>
         <select name="breadCategoryID">
             <?php foreach ($breadCategories as $breadCategory): ?>
@@ -75,6 +85,36 @@ $statement->closeCursor();
 <script>
     function reset() {
         document('#BreadManager').reset();
+    }
+    function validate() {
+        var breadCode = document.forms["BreadManager"]["code"].value;
+        var breadName = document.forms["BreadManager"]["name"].value;
+        var breadDescription = document.forms["BreadManager"]["description"].value;
+        var breadPrice = document.forms["BreadManager"]["price"].value;
+
+        if (breadCode == "" || breadCode.length < 4 || breadCode.length > 10) {
+            alert("Should not be blank and length should be between 4 to 10 characters");
+            return false;
+        }
+
+        if (breadCode)
+
+        if (breadName == "" || breadName.length < 10 || breadName.length > 100) {
+            alert("Should not be blank and length should be between 10 and 100 characters");
+            return false;
+        }
+
+        if (breadDescription == "" || breadDescription.length < 10 || breadDescription.length > 255) {
+            alert("Should not be blank and length should be between between 10 and 255 characters");
+            return false;
+        }
+
+        var priceNum = parseFloat(breadPrice);
+        if (isNaN(priceNum) || breadPrice == "" || priceNum <= 0 || priceNum > 100000) {
+            alert("Should not be blank, should be a positive number, and should not exceed $100000");
+            return false;
+        }
+        return true;
     }
 </script>
 
