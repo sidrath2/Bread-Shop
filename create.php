@@ -97,8 +97,6 @@ $statement->closeCursor();
             return false;
         }
 
-        if (breadCode)
-
         if (breadName == "" || breadName.length < 10 || breadName.length > 100) {
             alert("Should not be blank and length should be between 10 and 100 characters");
             return false;
