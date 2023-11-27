@@ -71,7 +71,7 @@
             echo $error . '<br>';
     }
         echo '</div>';
-        include('shipping.html');
+        include('shipping.php');
         exit();
     }
 ?>
@@ -85,8 +85,33 @@
         
     </head>
     <body>
+    <div id="login-logout">
+            <?php
+            session_start();
+            if (isset($_SESSION['is_valid_admin']) && $_SESSION['is_valid_admin']) {
+                $firstName = $_SESSION['firstName'];
+                $lastName = $_SESSION['lastName'];
+                $emailAddress = $_SESSION['emailAddress'];
+                echo "Welcome, $firstName $lastName ($emailAddress)!  | <a href='logout.php'>Logout</a>";
+            } else {
+                echo "<a href='login.php'>Login</a>";
+            }
+            ?>
+        </div>
     <?php include ('header.php'); ?>
-
+    <nav>
+        <!--Navigating from one page to the other-->
+        <a href="./index.php">Home</a>
+        <a href="./bread.php">Menu</a>
+        <a href="./map.html">Map</a>
+        <?php
+            if (isset($_SESSION['is_valid_admin']) && $_SESSION['is_valid_admin']) {
+                echo '<a href="./shipping.php">Shipping Form</a>';
+                echo ' ';
+                echo '<a href="./create.php">Bread Manager</a>';
+            }
+            ?>
+      </nav>
 
     <h1>Shipping Label:</h1>
 
