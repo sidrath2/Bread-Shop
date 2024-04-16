@@ -1,7 +1,7 @@
 <!--SIDRATH AHMED, 10/06/2023, IT-202-003, UNIT 3 Assignment, sa375@njit.edu-->
 <!-- Hello -->
 
-<!--The following is the code for the Home page-->
+<!--The following is     the code for the Home page-->
 <html>
     <head>
         <title>Taskin Bakery & Cafe Since 1997</title>
@@ -62,19 +62,19 @@
             <li>Kumpir: a baked potato dish popular in Turkey. </li>
 </ul>
 
-<img src = "kumpir.jpg"
+<img src = "AD02.jpg"
     height = "150"
     width = "170"/>
-<img src = "lamacun.jpg" 
+<img src = "AD03.jpg" 
     height = "150" 
     width = "163"/>
-<img src = "Pide.png" 
+<img src = "BO02.png" 
     height = "150"
     width = "200" />
-<img src = "Simit.jpg" 
+<img src = "BO03.jpg" 
     height = "150" 
     width = "200"/>
-<img src = "gozleme-24.jpg" 
+<img src = "TR03.jpg" 
     height = "150" 
     width = "180"/>
 
